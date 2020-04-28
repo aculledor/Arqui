@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 	
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-  struct quaternion *A, *B, *C, DP;
+  __m256d *A, *B, *C, DP;
   
   inicializarQuaternions(&A, &B, &C, &DP, N);
 

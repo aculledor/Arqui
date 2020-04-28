@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <pmmintrin.h>
+#include <immintrin.h>
 
 struct quaternion {
   double a;
@@ -23,11 +24,11 @@ struct quaternion {
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N);
+void inicializarQuaternions(__m256d **A, __m256d **B, __m256d **C, __m256d *DP, int N);
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N);
+void calculos(__m256d *A, __m256d *B, __m256d *C, __m256d *DP, int N);
 
-void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C);
+void destruir(__m256d *A, __m256d *B, __m256d *C);
 
 
 #endif //HEADER_H

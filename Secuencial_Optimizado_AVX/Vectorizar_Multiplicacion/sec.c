@@ -4,29 +4,24 @@
 
 #include "header.h"
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N){
+void inicializarQuaternions(__m256d **A, __m256d **B, __m256d **C, __m256d *DP, int N){
 	int i;
 
-	(*A)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
-	(*B)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
-	(*C)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
+	(*A)  = (__m256d*)malloc(sizeof(__m256d)*N);
+	(*B)  = (__m256d*)malloc(sizeof(__m256d)*N);
+	(*C)  = (__m256d*)malloc(sizeof(__m256d)*N);
 	
 
 	for(i=0;i<N;i++){
-		(*C)[i].a= 0; (*C)[i].b= 0; (*C)[i].c= 0; (*C)[i].d= 0;
-		
-		(*A)[i].a = rand(); (*A)[i].b = rand(); (*A)[i].c = rand(); (*A)[i].d = rand();
-		(*B)[i].a = rand(); (*B)[i].b = rand(); (*B)[i].c = rand(); (*B)[i].d = rand();
+		(*A)[i] = _mm256_set_pd(rand(),rand(),rand(),rand());
+		(*B)[i] = _mm256_set_pd(rand(),rand(),rand(),rand());
+		(*C)[i] = _mm256_setzero_pd();
 	}
-	
-	(*DP).a = 0;
-	(*DP).b = 0;
-	(*DP).c = 0;
-	(*DP).d = 0;
+	(*DP)= _mm256_setzero_pd();
 
 }
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
+void calculos(__m256d *A, __m256d *B, __m256d *C, __m256d *DP, int N){
 	int i;
 
 	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
@@ -59,7 +54,7 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
 }
 
-void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
+void destruir(__m256d *A, __m256d *B, __m256d *C){
 	free(A);
 	free(B);
 	free(C);

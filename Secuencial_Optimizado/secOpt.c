@@ -4,7 +4,7 @@
 
 #include "header.h"
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N){
+void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion *DP, int N){
 	int i;
 
 	(*A)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
@@ -26,7 +26,7 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 }
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
+void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *DP, int N){
 	int i;
 	double aux = 0;
 
@@ -56,9 +56,8 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
 }
 
-void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
+void destruir(struct quaternion *A, struct quaternion *B){
 	_mm_free(A);
 	_mm_free(B);
-	_mm_free(C);
 }
 

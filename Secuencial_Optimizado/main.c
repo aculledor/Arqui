@@ -80,13 +80,13 @@ int main(int argc, char **argv) {
 	
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-  struct quaternion *A, *B, *C, DP;
+  struct quaternion *A, *B, DP;
   
-  inicializarQuaternions(&A, &B, &C, &DP, N);
+  inicializarQuaternions(&A, &B, &DP, N);
 
   start_counter();
   
-  calculos(A,B,C,&DP, N);
+  calculos(A,B,&DP, N);
 
   ck = get_counter();
 
