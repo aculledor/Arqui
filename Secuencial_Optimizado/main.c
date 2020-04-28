@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
 
 	//printf("----------------------------------\n");
 
-	void destruir(A,B,C);
+	destruir(A,B);
 
   return 0;
 }

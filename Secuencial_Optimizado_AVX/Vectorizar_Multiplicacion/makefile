@@ -1,5 +1,4 @@
-#CC= gcc -Wall -mavx -O0	#Sen autovectorizacion
-CC= gcc -Wall -mavx -O3		#Con autovectorizacion
+CC= gcc -Wall -mavx -O0
 LIBS = -msse3 -lm
 HEADER_FILES_DIR = ./headerFiles
 INCLUDES = -I $(HEADER_FILES_DIR)

@@ -9,12 +9,8 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 	(*A)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
 	(*B)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
-	(*C)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
-	
 
 	for(i=0;i<N;i++){
-		(*C)[i].a= 0; (*C)[i].b= 0; (*C)[i].c= 0; (*C)[i].d= 0;
-		
 		(*A)[i].a = rand(); (*A)[i].b = rand(); (*A)[i].c = rand(); (*A)[i].d = rand();
 		(*B)[i].a = rand(); (*B)[i].b = rand(); (*B)[i].c = rand(); (*B)[i].d = rand();
 	}
