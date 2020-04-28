@@ -4,13 +4,12 @@
 
 #include "header.h"
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int q){
+void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N){
 	int i;
 
-	(*A)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*(N^q), TAMLINHA);
-	(*B)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*(N^q), TAMLINHA);
-	(*C)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*(N^q), TAMLINHA);
-	//(*DP) = (struct quaternion)_mm_malloc(sizeof(struct quaternion), TAMLINHA);
+	(*A)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
+	(*B)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
+	(*C)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
 	
 
 	for(i=0;i<N;i++){
@@ -27,14 +26,14 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 }
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP){
+void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
 	int i;
 
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
+	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
 	
 	for(i=0;i<N;i++){
 		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}
+	}*/
 	
 	for(i=0;i<N;i++){
 		C[i].a = A[i].a * B[i].a;
@@ -51,12 +50,18 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 		(*DP).d = (*DP).d + C[i].d * C[i].d;
 	}
 	
-	printf("\n--------------------------------------\n");
+	//printf("\n--------------------------------------\n");
 	
-	for(i=0;i<N;i++){
+	/*for(i=0;i<N;i++){
 		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
 	}
 
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
+	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
+}
+
+void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
+	_mm_free(A);
+	_mm_free(B);
+	_mm_free(C);
 }
 

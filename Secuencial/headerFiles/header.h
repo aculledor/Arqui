@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <math.h>
 #include <pmmintrin.h>
 
 struct quaternion {
@@ -19,12 +20,14 @@ struct quaternion {
 };
 
 #define SEED 10007
-#define N 10
+#define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int q);
+void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N);
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP);
+void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N);
+
+void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C);
 
 
 #endif //HEADER_H

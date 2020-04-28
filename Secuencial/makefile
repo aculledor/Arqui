@@ -1,5 +1,5 @@
 CC= gcc -Wall -O0
-LIBS = -msse3
+LIBS = -msse3 -lm
 HEADER_FILES_DIR = ./headerFiles
 INCLUDES = -I $(HEADER_FILES_DIR)
 
