@@ -28,6 +28,7 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
 	int i;
+	double aux = 0;
 
 	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
 	
@@ -36,18 +37,14 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 	}*/
 	
 	for(i=0;i<N;i++){
-		C[i].a = A[i].a * B[i].a;
-		C[i].b = A[i].b * B[i].b;
-		C[i].c = A[i].c * B[i].c;
-		C[i].d = A[i].d * B[i].d;
-	}
-
- 
-	for(i=0;i<N;i++){
-		(*DP).a = (*DP).a + C[i].a * C[i].a;
-		(*DP).b = (*DP).b + C[i].b * C[i].b;
-		(*DP).c = (*DP).c + C[i].c * C[i].c;
-		(*DP).d = (*DP).d + C[i].d * C[i].d;
+		aux = A[i].a * B[i].a;
+		(*DP).a += aux * aux;
+		aux = A[i].b * B[i].b;
+		(*DP).b += aux * aux;
+		aux = A[i].c * B[i].c;
+		(*DP).c += aux * aux;
+		aux = A[i].d * B[i].d;
+		(*DP).d += aux * aux;
 	}
 	
 	//printf("\n--------------------------------------\n");

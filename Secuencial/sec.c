@@ -7,9 +7,9 @@
 void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N){
 	int i;
 
-	(*A)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
-	(*B)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
-	(*C)  = (struct quaternion*)_mm_malloc(sizeof(struct quaternion)*N, TAMLINHA);
+	(*A)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
+	(*B)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
+	(*C)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
 	
 
 	for(i=0;i<N;i++){
@@ -60,8 +60,8 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 }
 
 void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
-	_mm_free(A);
-	_mm_free(B);
-	_mm_free(C);
+	free(A);
+	free(B);
+	free(C);
 }
 
