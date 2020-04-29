@@ -23,7 +23,5 @@ void calculos(__m256d *A, __m256d *B, double **DP, int N);
 
 void destruir(__m256d *A, __m256d *B, int N);
 
-void darVuelta(double **DP);
-
 
 #endif //HEADER_H

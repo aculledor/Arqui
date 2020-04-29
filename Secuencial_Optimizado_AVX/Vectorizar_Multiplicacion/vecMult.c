@@ -29,16 +29,6 @@ void calculos(__m256d *A, __m256d *B, double **DP, int N){
 	(*DP) = (double *)&result;
 }
 
-void darVuelta(double **DP){
-	double aux = 0;
-	aux = (*DP)[0];
-		(*DP)[0] = (*DP)[3];
-		(*DP)[3] = aux;
-	aux = (*DP)[1];
-		(*DP)[1] = (*DP)[2];
-		(*DP)[2] = aux;
-}
-
 void destruir(__m256d *A, __m256d *B, int N){
 	_mm_free(A);
 	_mm_free(B);
