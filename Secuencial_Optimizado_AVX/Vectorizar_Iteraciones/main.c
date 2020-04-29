@@ -81,11 +81,11 @@ int main(int argc, char **argv) {
 	
   double **A, **B, *DP;
   
-  inicializarQuaternions(&A, &B, &DP, N);
+  inicializarQuaternions(&A, &B, N);
 
   start_counter();
   
-  calculos(A,B,&DP, N);
+  calculos(A, B, &DP, N);
 
   ck = get_counter();
 	
