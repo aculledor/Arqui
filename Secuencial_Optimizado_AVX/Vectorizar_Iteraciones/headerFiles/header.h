@@ -18,7 +18,7 @@
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(double ***A, double ***B, double **DP, int N);
+void inicializarQuaternions(double ***A, double ***B, int N);
 
 void calculos(double **A, double **B, double **DP, int N);
 
