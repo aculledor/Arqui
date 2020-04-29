@@ -82,24 +82,24 @@ int main(int argc, char **argv) {
 	
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-  struct quaternion *A, *B, DP;
+  struct quaternion *A, *B, *C, DP;
   
-  inicializarQuaternions(&A, &B, &DP, N);
+  inicializarQuaternions(&A, &B, &C, &DP, N);
 
   start_counter();
   
-  calculos(A, B, &DP, N, f);
+  calculos(A, B, C, &DP, N, f);
 
   ck = get_counter();
 
-  printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, DP.a, DP.b, DP.c, DP.d);
+  printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, DP.a, DP.b, DP.c, DP.d);
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
   mhz(1, 1);
 
 	//printf("----------------------------------\n");
 
-	destruir(A,B);
+	destruir(A, B, C);
 
   return 0;
 }
