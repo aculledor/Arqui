@@ -25,12 +25,6 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *DP, int N){
 	int i;
 	double aux = 0;
-
-	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
-	
-	for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}*/
 	
 	for(i=0;i<N;i++){
 		aux = A[i].a * B[i].a;
@@ -42,14 +36,6 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *DP,
 		aux = A[i].d * B[i].d;
 		(*DP).d += aux * aux;
 	}
-	
-	//printf("\n--------------------------------------\n");
-	
-	/*for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}
-
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
 }
 
 void destruir(struct quaternion *A, struct quaternion *B){
