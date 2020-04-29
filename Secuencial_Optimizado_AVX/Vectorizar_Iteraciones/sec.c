@@ -13,15 +13,15 @@ void inicializarQuaternions(double ***A, double ***B, double **DP, int N){
 
 	for(i=0;i<N;i++){
 		(*A)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*A)[i][0] = (double)rand(); 
-			(*A)[i][1] = (double)rand(); 
-			(*A)[i][2] = (double)rand(); 
-			(*A)[i][3] = (double)rand();
+			(*A)[i][0] = (double)1; 
+			(*A)[i][1] = (double)1; 
+			(*A)[i][2] = (double)1; 
+			(*A)[i][3] = (double)1;
 		(*B)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*B)[i][0] = (double)rand(); 
-			(*B)[i][1] = (double)rand(); 
-			(*B)[i][2] = (double)rand(); 
-			(*B)[i][3] = (double)rand();
+			(*B)[i][0] = (double)1; 
+			(*B)[i][1] = (double)2; 
+			(*B)[i][2] = (double)3; 
+			(*B)[i][3] = (double)4;
 	} 
 
 }
@@ -33,7 +33,7 @@ void calculos(double **A, double **B, double **DP, int N){
 
 	for(i=0;i<N;i=i+4){
 		aux = _mm256_add_pd(_mm256_set_pd(A[i][0],A[i][1],A[i][2],A[i][3]), _mm256_set_pd(B[i][0],B[i][1],B[i][2],B[i][3]) );
-		aux = _mm256_add_pd(aux,aux);
+		//aux = _mm256_add_pd(aux,aux);
 
 		/*aux2 = _mm256_mul_pd(_mm256_set_pd(A[i+2][0],A[i+2][1],A[i+2][2],A[i+2][3]), _mm256_set_pd(B[i+2][0],B[i+2][1],B[i+2][2],B[i+2][3]) );
 		aux2 = _mm256_mul_pd(aux2,aux2);
