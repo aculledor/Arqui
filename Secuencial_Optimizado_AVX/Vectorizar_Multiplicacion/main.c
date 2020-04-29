@@ -78,9 +78,11 @@ int main(int argc, char **argv) {
   
   N = pow(BASE, Q[q]);
 	
-	printf("q=%d Q=%d N=%d\n", q, Q[q], N);
+	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-  double **A, **B, *DP;
+	__m256d *A, *B; 
+	double *DP;
+
   
   inicializarQuaternions(&A, &B, N);
 

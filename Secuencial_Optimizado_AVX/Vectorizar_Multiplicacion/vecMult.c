@@ -4,62 +4,32 @@
 
 #include "header.h"
 
-void inicializarQuaternions(double ***A, double ***B, int N){
-	int i;
-
-	(*A)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
-	(*B)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
+void inicializarQuaternions(__m256d **A, __m256d **B, int N){
+	(*A)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
+	(*B)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
 	
 
-	for(i=0;i<N;i++){
-		(*A)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*A)[i][0] = (double)rand(); 
-			(*A)[i][1] = (double)rand(); 
-			(*A)[i][2] = (double)rand(); 
-			(*A)[i][3] = (double)rand();
-		(*B)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*B)[i][0] = (double)rand(); 
-			(*B)[i][1] = (double)rand(); 
-			(*B)[i][2] = (double)rand(); 
-			(*B)[i][3] = (double)rand();
+	for(int i=0;i<N;i++){
+		(*A)[i] = _mm256_set_pd((double)rand(),(double)rand(),(double)rand(),(double)rand());
+		(*B)[i] = _mm256_set_pd((double)rand(),(double)rand(),(double)rand(),(double)rand());
 	} 
-	
-	/*printf("\n--------------------------------------\n");
-	
-	for(i=0;i<N;i++){
-		printf("N=%d", i);
-		printf("\n\tA= [%lf, %lf, %lf, %lf]",(*A)[i][0],(*A)[i][1],(*A)[i][2],(*A)[i][3]);
-		printf("\n\tB= [%lf, %lf, %lf, %lf]\n",(*B)[i][0],(*B)[i][1],(*B)[i][2],(*B)[i][3]);
-	}
-	
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP)[0],(*DP)[1],(*DP)[2],(*DP)[3]);*/
 }
 
-void calculos(double **A, double **B, double **DP, int N){
-	int i;
+void calculos(__m256d *A, __m256d *B, double **DP, int N){
 	__m256d aux = _mm256_setzero_pd();
 	__m256d result = _mm256_setzero_pd();
 	
-	for(i=0;i<N;i++){
+	for(int i=0;i<N;i++){
 		aux = _mm256_add_pd(
-			_mm256_set_pd(A[i][0],A[i][1],A[i][2],A[i][3]), 
-			_mm256_set_pd(B[i][0],B[i][1],B[i][2],B[i][3]) );
+			A[i], 
+			B[i] );
 		result = _mm256_fmadd_pd(aux, aux, result);
 	}
 	
 	(*DP) = (double *)&result;
-	
-	//printf("\n--------------------------------------\n");
-	
-	//printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP)[0],(*DP)[1],(*DP)[2],(*DP)[3]);
 }
 
-void destruir(double **A, double **B, int N){
-	int i;
-	for(i=0; i<N; i++){
-		_mm_free(A[i]);
-		_mm_free(B[i]);
-	}
+void destruir(__m256d *A, __m256d *B, int N){
 	_mm_free(A);
 	_mm_free(B);
 }

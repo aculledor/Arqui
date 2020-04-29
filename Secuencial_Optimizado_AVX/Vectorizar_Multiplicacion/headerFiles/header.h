@@ -17,11 +17,11 @@
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(double ***A, double ***B, int N);
+void inicializarQuaternions(__m256d **A, __m256d **B, int N);
 
-void calculos(double **A, double **B, double **DP, int N);
+void calculos(__m256d *A, __m256d *B, double **DP, int N);
 
-void destruir(double **A, double **B, int N);
+void destruir(__m256d *A, __m256d *B, int N);
 
 
 #endif //HEADER_H
