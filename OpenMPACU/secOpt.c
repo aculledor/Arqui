@@ -37,7 +37,7 @@ void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, 
 		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
 	}*/
 	
-	#pragma omp parallel shared(A,B,C) 
+	#pragma omp parallel shared(A,B,C)
 	{
 		#pragma omp for
 			for(i=0;i<N;i++){
