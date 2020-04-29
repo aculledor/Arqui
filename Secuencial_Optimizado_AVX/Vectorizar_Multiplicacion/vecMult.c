@@ -16,11 +16,10 @@ void inicializarQuaternions(__m256d **A, __m256d **B, int N){
 }
 
 void calculos(__m256d *A, __m256d *B, double **DP, int N){
-	int i;
 	__m256d aux = _mm256_setzero_pd();
 	__m256d result = _mm256_setzero_pd();
 	
-	for(i=0;i<N;i++){
+	for(int i=0;i<N;i++){
 		aux = _mm256_add_pd(
 			A[i], 
 			B[i] );
