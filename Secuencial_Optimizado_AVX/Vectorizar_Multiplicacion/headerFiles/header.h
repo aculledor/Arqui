@@ -23,5 +23,7 @@ void calculos(double **A, double **B, double **DP, int N);
 
 void destruir(double **A, double **B, int N);
 
+void darVuelta(double **DP);
+
 
 #endif //HEADER_H

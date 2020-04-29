@@ -54,6 +54,16 @@ void calculos(double **A, double **B, double **DP, int N){
 	//printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP)[0],(*DP)[1],(*DP)[2],(*DP)[3]);
 }
 
+void darVuelta(double **DP){
+	double aux = 0;
+	aux = (*DP)[0];
+	(*DP)[0] = (*DP)[3];
+	(*DP)[3] = aux;
+	aux = (*DP)[1];
+	(*DP)[1] = (*DP)[2];
+	(*DP)[2] = aux;
+}
+
 void destruir(double **A, double **B, int N){
 	int i;
 	for(i=0; i<N; i++){
