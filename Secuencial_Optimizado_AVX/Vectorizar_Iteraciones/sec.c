@@ -4,73 +4,69 @@
 
 #include "header.h"
 
-void inicializarQuaternions(double ***A, double ***B, int N){
-	int i;
-
-	(*A)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
-	(*B)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
+void inicializarQuaternions(__m256d **A, __m256d **B, int N){
+	(*A)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
+	(*B)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
 	
 
-	for(i=0;i<N;i++){
-		(*A)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*A)[i][0] = (double)1; 
-			(*A)[i][1] = (double)1; 
-			(*A)[i][2] = (double)1; 
-			(*A)[i][3] = (double)1;
-		(*B)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-			(*B)[i][0] = (double)1; 
-			(*B)[i][1] = (double)2; 
-			(*B)[i][2] = (double)3; 
-			(*B)[i][3] = (double)4;
+	for(int i=0;i<N;i++){
+		
+		(*A)[i] = _mm256_set_pd(1,2,3,4);
+		(*B)[i] = _mm256_set_pd(1,1,1,1);
 	} 
-
 }
 
 
-void calculos(double **A, double **B, double **DP, int N){
+void calculos(__m256d *A, __m256d *B, double **DP, int N){
 	int i;
 	__m256d aux = _mm256_setzero_pd();
 	__m256d aux2 = _mm256_setzero_pd();
-	__m256d aux3 = _mm256_setzero_pd();
+	__m256d resultado = _mm256_setzero_pd();
 
-	for(i=0;i<N;i=i+4){
-		aux = _mm256_add_pd(_mm256_set_pd(A[i][0],A[i][1],A[i][2],A[i][3]), _mm256_set_pd(B[i][0],B[i][1],B[i][2],B[i][3]) );
-		//aux = _mm256_add_pd(aux,aux);
+	for(i=0;i<1;i=i+4){
 
-		/*aux2 = _mm256_mul_pd(_mm256_set_pd(A[i+2][0],A[i+2][1],A[i+2][2],A[i+2][3]), _mm256_set_pd(B[i+2][0],B[i+2][1],B[i+2][2],B[i+2][3]) );
-		aux2 = _mm256_mul_pd(aux2,aux2);
-		
-		aux3= _mm256_hadd_pd(aux,aux2);
-		aux3=_mm256_permute_pd(aux3, 0b00100111);
-		
-		aux = _mm256_mul_pd(_mm256_set_pd(A[i+1][0],A[i+1][1],A[i+1][2],A[i+1][3]), _mm256_set_pd(B[i+1][0],B[i+1][1],B[i+1][2],B[i+1][3]) );
+		aux = _mm256_mul_pd(A[i],B[i]);
 		aux = _mm256_mul_pd(aux,aux);
+		aux2 = _mm256_permute2f128_pd(aux,aux,1);
+		aux = _mm256_add_pd(aux,aux2);
+		aux = _mm256_hadd_pd(aux,aux);
+		resultado = _mm256_set_pd( resultado[3], resultado[2], resultado[1], resultado[0]+aux[0]);
 
-		aux = _mm256_mul_pd(_mm256_set_pd(A[i+3][0],A[i+3][1],A[i+3][2],A[i+3][3]), _mm256_set_pd(B[i+3][0],B[i+3][1],B[i+3][2],B[i+3][3]) );
-		aux2 = _mm256_mul_pd(aux2,aux2);
-		
-		aux2= _mm256_hadd_pd(aux,aux2);
-		aux2=_mm256_permute_pd(aux2, 0b00100111);
-		
-		aux=_mm256_hadd_pd(aux3,aux2);*/
-		
+		aux = _mm256_mul_pd(A[i+1],B[i+1]);
+		aux = _mm256_mul_pd(aux,aux);
+		aux2 = _mm256_permute2f128_pd(aux,aux,1);
+		aux = _mm256_add_pd(aux,aux2);
+		aux = _mm256_hadd_pd(aux,aux);
+		resultado = _mm256_set_pd( resultado[3], resultado[2], resultado[1]+aux[0], resultado[0]);
+
+		aux = _mm256_mul_pd(A[i+2],B[i+2]);
+		aux = _mm256_mul_pd(aux,aux);
+		aux2 = _mm256_permute2f128_pd(aux,aux,1);
+		aux = _mm256_add_pd(aux,aux2);
+		aux = _mm256_hadd_pd(aux,aux);
+		resultado = _mm256_set_pd( resultado[3], resultado[2]+aux[0], resultado[1], resultado[0]);
+
+		aux = _mm256_mul_pd(A[i+3],B[i+3]);
+		aux = _mm256_mul_pd(aux,aux);
+		aux2 = _mm256_permute2f128_pd(aux,aux,1);
+		aux = _mm256_add_pd(aux,aux2);
+		aux = _mm256_hadd_pd(aux,aux);
+		resultado = _mm256_set_pd( resultado[3]+aux[0], resultado[2], resultado[1], resultado[0]);
+	
 	}
 
 	(*DP) = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-	(*DP)= (double *)&aux;
+	(*DP)= (double *)&resultado;
 
-	//printf("Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
+	printf(" Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
 
 }
 
-void destruir(double **A, double **B, int N){
-	int i;
-	for(i=0; i<N; i++){
-		_mm_free(A[i]);
-		_mm_free(B[i]);
-	}
+void destruir(__m256d *A, __m256d *B, int N){
+
 	_mm_free(A);
 	_mm_free(B);
+
 }
 
 

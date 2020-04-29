@@ -79,7 +79,9 @@ int main(int argc, char **argv) {
   
   N = pow(BASE, Q[q]);
 	
-  double **A, **B, *DP;
+ 
+	__m256d *A, *B; 
+	double *DP;
   
   inicializarQuaternions(&A, &B, N);
 
