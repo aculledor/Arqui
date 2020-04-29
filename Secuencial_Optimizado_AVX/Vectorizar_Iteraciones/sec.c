@@ -4,64 +4,70 @@
 
 #include "header.h"
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N){
+void inicializarQuaternions(double ***A, double ***B, double **DP, int N){
 	int i;
 
-	(*A)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
-	(*B)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
-	(*C)  = (struct quaternion*)malloc(sizeof(struct quaternion)*N);
+	(*A)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
+	(*B)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
 	
 
 	for(i=0;i<N;i++){
-		(*C)[i].a= 0; (*C)[i].b= 0; (*C)[i].c= 0; (*C)[i].d= 0;
+		(*A)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
+			(*A)[i][0] = (double)rand(); 
+			(*A)[i][1] = (double)rand(); 
+			(*A)[i][2] = (double)rand(); 
+			(*A)[i][3] = (double)rand();
+		(*B)[i] = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
+			(*B)[i][0] = (double)rand(); 
+			(*B)[i][1] = (double)rand(); 
+			(*B)[i][2] = (double)rand(); 
+			(*B)[i][3] = (double)rand();
+	} 
+
+}
+
+
+void calculos(double **A, double **B, double **DP, int N){
+	int i;
+	__m256d aux, aux2, aux3;
+
+	for(i=0;i<N;i=i+4){
+		aux = _mm256_add_pd(_mm256_set_pd(A[i][0],A[i][1],A[i][2],A[i][3]), _mm256_set_pd(B[i][0],B[i][1],B[i][2],B[i][3]) );
+		aux = _mm256_add_pd(aux,aux);
+
+		/*aux2 = _mm256_mul_pd(_mm256_set_pd(A[i+2][0],A[i+2][1],A[i+2][2],A[i+2][3]), _mm256_set_pd(B[i+2][0],B[i+2][1],B[i+2][2],B[i+2][3]) );
+		aux2 = _mm256_mul_pd(aux2,aux2);
 		
-		(*A)[i].a = rand(); (*A)[i].b = rand(); (*A)[i].c = rand(); (*A)[i].d = rand();
-		(*B)[i].a = rand(); (*B)[i].b = rand(); (*B)[i].c = rand(); (*B)[i].d = rand();
+		aux3= _mm256_hadd_pd(aux,aux2);
+		aux3=_mm256_permute_pd(aux3, 0b00100111);
+		
+		aux = _mm256_mul_pd(_mm256_set_pd(A[i+1][0],A[i+1][1],A[i+1][2],A[i+1][3]), _mm256_set_pd(B[i+1][0],B[i+1][1],B[i+1][2],B[i+1][3]) );
+		aux = _mm256_mul_pd(aux,aux);
+
+		aux = _mm256_mul_pd(_mm256_set_pd(A[i+3][0],A[i+3][1],A[i+3][2],A[i+3][3]), _mm256_set_pd(B[i+3][0],B[i+3][1],B[i+3][2],B[i+3][3]) );
+		aux2 = _mm256_mul_pd(aux2,aux2);
+		
+		aux2= _mm256_hadd_pd(aux,aux2);
+		aux2=_mm256_permute_pd(aux2, 0b00100111);
+		
+		aux=_mm256_hadd_pd(aux3,aux2);*/
+		
 	}
-	
-	(*DP).a = 0;
-	(*DP).b = 0;
-	(*DP).c = 0;
-	(*DP).d = 0;
+
+	(*DP)= (double *)&aux;
+
+printf("Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
 
 }
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
+void destruir(double **A, double **B, int N){
 	int i;
-
-	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
-	
-	for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}*/
-	
-	for(i=0;i<N;i++){
-		C[i].a = A[i].a * B[i].a;
-		C[i].b = A[i].b * B[i].b;
-		C[i].c = A[i].c * B[i].c;
-		C[i].d = A[i].d * B[i].d;
+	for(i=0; i<N; i++){
+		_mm_free(A[i]);
+		_mm_free(B[i]);
 	}
-
- 
-	for(i=0;i<N;i++){
-		(*DP).a = (*DP).a + C[i].a * C[i].a;
-		(*DP).b = (*DP).b + C[i].b * C[i].b;
-		(*DP).c = (*DP).c + C[i].c * C[i].c;
-		(*DP).d = (*DP).d + C[i].d * C[i].d;
-	}
-	
-	//printf("\n--------------------------------------\n");
-	
-	/*for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}
-
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
+	_mm_free(A);
+	_mm_free(B);
 }
 
-void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
-	free(A);
-	free(B);
-	free(C);
-}
 

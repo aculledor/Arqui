@@ -64,6 +64,7 @@ double mhz(int verbose, int sleeptime) {
 }
 
 
+
 int main(int argc, char **argv) {
 	srand(SEED);
   int q = 0, N;
@@ -78,26 +79,25 @@ int main(int argc, char **argv) {
   
   N = pow(BASE, Q[q]);
 	
-	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
-	
-  struct quaternion *A, *B, *C, DP;
+  double **A, **B, *DP;
   
-  inicializarQuaternions(&A, &B, &C, &DP, N);
+  inicializarQuaternions(&A, &B, &DP, N);
 
   start_counter();
   
-  calculos(A,B,C,&DP, N);
+  calculos(A,B,&DP, N);
 
   ck = get_counter();
-
-  printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, DP.a, DP.b, DP.c, DP.d);
+	
+	
+  printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
   mhz(1, 1);
 
 	//printf("----------------------------------\n");
 
-	void destruir(A,B,C);
+	destruir(A,B,N);
 
   return 0;
 }

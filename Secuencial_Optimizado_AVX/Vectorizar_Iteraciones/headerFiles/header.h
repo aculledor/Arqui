@@ -11,23 +11,18 @@
 #include <unistd.h>
 #include <math.h>
 #include <pmmintrin.h>
+#include <immintrin.h>
 
-struct quaternion {
-  double a;
-  double b;
-  double d;
-  double c;
-};
 
 #define SEED 10007
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion **C, struct quaternion *DP, int N);
+void inicializarQuaternions(double ***A, double ***B, double **DP, int N);
 
-void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N);
+void calculos(double **A, double **B, double **DP, int N);
 
-void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C);
+void destruir(double **A, double **B, int N);
 
 
 #endif //HEADER_H
