@@ -5,7 +5,7 @@ INCLUDES = -I $(HEADER_FILES_DIR)
 
 MAIN= ejecutable
 
-SRCS = main.c sec.c
+SRCS = main.c vecMult.c
 
 DEPS = $(HEADER_FILES_DIR)/header.h 
 
