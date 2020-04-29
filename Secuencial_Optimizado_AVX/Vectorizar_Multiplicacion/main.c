@@ -82,15 +82,13 @@ int main(int argc, char **argv) {
 	
   double **A, **B, *DP;
   
-  inicializarQuaternions(&A, &B, &DP, N);
+  inicializarQuaternions(&A, &B, N);
 
   start_counter();
   
   calculos(A, B, &DP, N);
 
   ck = get_counter();
-
-	
 
   printf("Clocks = %1.10lf.\nResultado: [ \n\t%lf + \n\t%lfi + \n\t%lfj + \n\t%lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
 

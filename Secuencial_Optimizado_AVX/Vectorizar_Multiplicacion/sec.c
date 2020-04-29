@@ -4,7 +4,7 @@
 
 #include "header.h"
 
-void inicializarQuaternions(double ***A, double ***B, double **DP, int N){
+void inicializarQuaternions(double ***A, double ***B, int N){
 	int i;
 
 	(*A)  = (double**)_mm_malloc(sizeof(double)*N, TAMLINHA);
@@ -23,7 +23,6 @@ void inicializarQuaternions(double ***A, double ***B, double **DP, int N){
 			(*B)[i][2] = (double)rand(); 
 			(*B)[i][3] = (double)rand();
 	} 
-	(*DP)= (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
 	
 	/*printf("\n--------------------------------------\n");
 	
