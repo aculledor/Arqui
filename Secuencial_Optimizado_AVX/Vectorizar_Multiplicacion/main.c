@@ -86,20 +86,20 @@ int main(int argc, char **argv) {
 
   start_counter();
   
-  //calculos(A, B, &DP, N);a
+  calculos(A, B, &DP, N);
 
   ck = get_counter();
 
-	//aux = (double *)&DP;
+	
 
-  //printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, aux[0], aux[1], aux[2], aux[3]);
+  printf("Clocks = %1.10lf.\nResultado: [ \n\t%lf + \n\t%lfi + \n\t%lfj + \n\t%lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
   mhz(1, 1);
 
 	//printf("----------------------------------\n");
 
-	//destruir(A,B);
+	destruir(A,B,N);
 
   return 0;
 }

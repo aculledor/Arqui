@@ -13,21 +13,15 @@
 #include <pmmintrin.h>
 #include <immintrin.h>
 
-struct quaternion {
-  double a;
-  double b;
-  double d;
-  double c;
-};
-
 #define SEED 10007
 #define BASE 10
 #define TAMLINHA 32
 
+void inicializarQuaternions(double ***A, double ***B, double **DP, int N);
 
-void calculos(__m256d *A, __m256d *B, __m256d *DP, int N);
+void calculos(double **A, double **B, double **DP, int N);
 
-void destruir(__m256d *A, __m256d *B);
+void destruir(double **A, double **B, int N);
 
 
 #endif //HEADER_H
