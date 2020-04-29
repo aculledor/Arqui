@@ -67,7 +67,7 @@ double mhz(int verbose, int sleeptime) {
 int main(int argc, char **argv) {
 	srand(SEED);
   int q = 0, N;
-  double ck, *aux;
+  double ck;
 
   if(argc ==2)
     q = (int)strtol(argv[1], NULL, 10);
@@ -78,15 +78,15 @@ int main(int argc, char **argv) {
   
   N = pow(BASE, Q[q]);
 	
-	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
+	printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-  __m256d *A, *B, DP;
+  double **A, **B, *DP;
   
   inicializarQuaternions(&A, &B, &DP, N);
 
   start_counter();
   
-  //calculos(A, B, &DP, N);
+  //calculos(A, B, &DP, N);a
 
   ck = get_counter();
 

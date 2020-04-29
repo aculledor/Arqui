@@ -24,7 +24,6 @@ struct quaternion {
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *DP, int N);
 
 void calculos(__m256d *A, __m256d *B, __m256d *DP, int N);
 
