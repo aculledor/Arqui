@@ -54,10 +54,10 @@ void calculos(__m256d *A, __m256d *B, double **DP, int N){
 	
 	}
 
-	//(*DP) = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
+	(*DP) = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
 	(*DP)= (double *)&resultado;
 
-	//printf(" Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
+	printf(" Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
 
 }
 

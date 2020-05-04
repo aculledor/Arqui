@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 
   ck = get_counter();
 
-  printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, DP.a, DP.b, DP.c, DP.d);
+  printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, DP.a, DP.b, DP.c, DP.d);
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
   mhz(1, 1);

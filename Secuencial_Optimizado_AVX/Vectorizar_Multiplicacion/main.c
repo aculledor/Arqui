@@ -80,11 +80,10 @@ int main(int argc, char **argv) {
 	
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-	__m256d *A, *B; 
-	double *DP;
+	double **A, **B, *DP;
 
   
-  inicializarQuaternions(&A, &B, N);
+  inicializarQuaternions(&A, &B, &DP, N);
 
   start_counter();
   
@@ -99,7 +98,7 @@ int main(int argc, char **argv) {
 
 	//printf("----------------------------------\n");
 
-	destruir(A,B,N);
+	destruir(A, B, N);
 
   return 0;
 }

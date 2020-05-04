@@ -26,37 +26,35 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 }
 
+struct quaternion multCua(struct quaternion A, struct quaternion B){
+	struct quaternion ab;
+	ab.a = A.a*B.a - A.b*B.b - A.c*B.c - A.d*B.d;
+	ab.b = A.a*B.b + A.b*B.a + A.c*B.d - A.d*B.c;
+	ab.c = A.a*B.c - A.b*B.d + A.c*B.a + A.d*B.b;
+	ab.d = A.a*B.d + A.b*B.c - A.c*B.b + A.d*B.a;
+	return ab;
+}
+
+struct quaternion sumCua(struct quaternion A, struct quaternion B){
+	struct quaternion ab;
+	ab.a = A.a+B.a;
+	ab.b = A.b+B.b;
+	ab.c = A.c+B.c;
+	ab.d = A.d+B.d;
+	return ab;
+}
+	
+
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *C, struct quaternion *DP, int N){
 	int i;
-
-	/*printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);
-	
 	for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}*/
-	
-	for(i=0;i<N;i++){
-		C[i].a = A[i].a * B[i].a;
-		C[i].b = A[i].b * B[i].b;
-		C[i].c = A[i].c * B[i].c;
-		C[i].d = A[i].d * B[i].d;
+		C[i]= multCua(A[i],B[i]);
 	}
 
  
 	for(i=0;i<N;i++){
-		(*DP).a = (*DP).a + C[i].a * C[i].a;
-		(*DP).b = (*DP).b + C[i].b * C[i].b;
-		(*DP).c = (*DP).c + C[i].c * C[i].c;
-		(*DP).d = (*DP).d + C[i].d * C[i].d;
+		(*DP)= sumCua( (*DP), multCua(C[i], C[i]) );
 	}
-	
-	//printf("\n--------------------------------------\n");
-	
-	/*for(i=0;i<N;i++){
-		printf("N=%d\n\tA= [%lf, %lf, %lf, %lf]\n\tB= [%lf, %lf, %lf, %lf]\n\tC= [%lf, %lf, %lf, %lf] \n", i, A[i].a,A[i].b,A[i].c,A[i].d, B[i].a,B[i].b,B[i].c,B[i].d, C[i].a,C[i].b,C[i].c,C[i].d);
-	}
-
-	printf("\n## DP [%lf,%lf,%lf,%lf] ##\n",(*DP).a,(*DP).b,(*DP).c,(*DP).d);*/
 }
 
 void destruir(struct quaternion *A, struct quaternion *B, struct quaternion *C){
