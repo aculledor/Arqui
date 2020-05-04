@@ -18,9 +18,9 @@
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(__m256d **A, __m256d **B, int N);
+void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N);
 
-void calculos(__m256d *A, __m256d *B, double **DP, int N);
+void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N);
 
 void destruir(__m256d *A, __m256d *B, int N);
 

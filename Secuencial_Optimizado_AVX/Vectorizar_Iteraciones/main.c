@@ -80,19 +80,23 @@ int main(int argc, char **argv) {
   N = pow(BASE, Q[q]);
 	
  
-	__m256d *A, *B; 
-	double *DP;
+	__m256d *A, *B, resultado; 
+	//double *DP;
   
-  inicializarQuaternions(&A, &B, N);
+  inicializarQuaternions(&A, &B, &resultado, N);
 
   start_counter();
   
-  calculos(A, B, &DP, N);
+  calculos(A, B, &resultado, N);
 
   ck = get_counter();
 	
 	
+<<<<<<< HEAD
   printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
+=======
+  printf("Clocks = %1.10lf. Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", ck, resultado[0], resultado[1], resultado[2], resultado[3]);
+>>>>>>> 8387ebcc5b3dab772e19a548675df9363fe21baf
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
   mhz(1, 1);
