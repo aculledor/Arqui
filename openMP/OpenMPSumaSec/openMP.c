@@ -26,17 +26,17 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 }
 
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *sol,  struct quaternion *DP, int N, int Fio){
-	int i;
+	int i = 0;
 	#pragma omp parallel num_threads(Fios[Fio])
 	{
-		struct quaternion ab;
+		struct quaternion ab, sol_prev;
 		#pragma omp for
 			for(i=0;i<N;i++){
 				ab.a = A[i].a*B[i].a - A[i].b*B[i].b - A[i].c*B[i].c - A[i].d*B[i].d;
 				ab.b = A[i].a*B[i].b + A[i].b*B[i].a + A[i].c*B[i].d - A[i].d*B[i].c;
 				ab.c = A[i].a*B[i].c - A[i].b*B[i].d + A[i].c*B[i].a + A[i].d*B[i].b;
 				ab.d = A[i].a*B[i].d + A[i].b*B[i].c - A[i].c*B[i].b + A[i].d*B[i].a;
-				
+
 				sol[i].a = (ab.a*ab.a - ab.b*ab.b - ab.c*ab.c - ab.d*ab.d);
 				sol[i].b = (ab.a*ab.b + ab.b*ab.a + ab.c*ab.d - ab.d*ab.c);
 				sol[i].c = (ab.a*ab.c - ab.b*ab.d + ab.c*ab.a + ab.d*ab.b);

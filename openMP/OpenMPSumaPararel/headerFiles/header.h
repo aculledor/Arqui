@@ -24,7 +24,7 @@ struct quaternion {
 #define BASE 10
 #define TAMLINHA 32
 
-void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion *DP, int N);
+void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct quaternion *DP, int N, int Fio);
 
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *DP, int N, int Fio);
 

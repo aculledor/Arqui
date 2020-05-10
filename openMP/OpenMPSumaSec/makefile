@@ -5,7 +5,7 @@ INCLUDES = -I $(HEADER_FILES_DIR)
 
 MAIN= ejecutable
 
-SRCS = main.c secOpt.c
+SRCS = main.c openMP.c
 
 DEPS = $(HEADER_FILES_DIR)/header.h 
 
