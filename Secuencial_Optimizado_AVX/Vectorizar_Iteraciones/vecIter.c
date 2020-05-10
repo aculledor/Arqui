@@ -11,48 +11,58 @@ void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N)
 	(*resultado) = _mm256_setzero_pd();
 
 	for(int i=0;i<N;i++){
-		(*A)[i] = _mm256_set_pd((double)rand(),(double)rand(),(double)rand(),(double)rand()); 
-		(*B)[i] = _mm256_set_pd((double)rand(),(double)rand(),(double)rand(),(double)rand());
+		(*A)[i] = _mm256_set_pd(rand(),rand(),rand(),rand()); 
+		(*B)[i] = _mm256_set_pd(rand(),rand(),rand(),rand());
 	} 
-}
-
-double suma(__m256d A, __m256d B){
-	__m256d aux = _mm256_setzero_pd();
-	__m256d aux2 = _mm256_setzero_pd();
-	
-	aux = _mm256_mul_pd(A,B);
-	aux = _mm256_mul_pd(aux,aux);
-	aux2 = _mm256_permute2f128_pd(aux,aux,1);
-	aux = _mm256_add_pd(aux,aux2);
-	aux = _mm256_hadd_pd(aux,aux);
-	
-	return aux[0];
 }
 
 void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N){
 	int i;
-
-	for(i=0;i<N;i=i+4){
-
-		(*resultado)[0] =+ suma(A[i],B[i]);
-
-		(*resultado)[1] += suma(A[i+1],B[i+1]);
-
-		(*resultado)[2] += suma(A[i+2],B[i+2]);
-
-		(*resultado)[3] += suma(A[i+3],B[i+3]);
+	 __m256d a0=_mm256_setzero_pd(), a1=_mm256_setzero_pd(), a2=_mm256_setzero_pd(), a3=_mm256_setzero_pd(), b0=_mm256_setzero_pd(), b1=_mm256_setzero_pd(), b2=_mm256_setzero_pd(), b3=_mm256_setzero_pd();
+	 __m256d aba=_mm256_setzero_pd(), abb=_mm256_setzero_pd(), abc=_mm256_setzero_pd(), abd=_mm256_setzero_pd();
+	 __m256d aux=_mm256_setzero_pd(), aux1=_mm256_setzero_pd(), aux2=_mm256_setzero_pd(), aux3=_mm256_setzero_pd();
 	
+	for(i=0;i<N;i=i+4){
+		for(int j=0; j<4; j++){
+			a0[j]=A[i+j][0];
+			a1[j]=A[i+j][1];
+			a2[j]=A[i+j][2];
+			a3[j]=A[i+j][3];
+			
+			b0[j]=B[i+j][0];
+			b1[j]=B[i+j][1];
+			b2[j]=B[i+j][2];
+			b3[j]=B[i+j][3];
+		}
+		
+		aba = _mm256_sub_pd(_mm256_sub_pd(_mm256_sub_pd(_mm256_mul_pd(a0,b0), _mm256_mul_pd(a1,b1)), _mm256_mul_pd(a2,b2)), _mm256_mul_pd(a3,b3));
+		
+		abb = _mm256_sub_pd(_mm256_add_pd(_mm256_add_pd(_mm256_mul_pd(a0,b1), _mm256_mul_pd(a1,b0)), _mm256_mul_pd(a2,b3)), _mm256_mul_pd(a3,b2));
+		
+		abc = _mm256_add_pd(_mm256_add_pd(_mm256_sub_pd(_mm256_mul_pd(a0,b2), _mm256_mul_pd(a1,b3)), _mm256_mul_pd(a2,b0)), _mm256_mul_pd(a3,b1));
+		
+		abd = _mm256_add_pd(_mm256_sub_pd(_mm256_add_pd(_mm256_mul_pd(a0,b3), _mm256_mul_pd(a1,b2)), _mm256_mul_pd(a2,b1)), _mm256_mul_pd(a3,b0));
+		
+		
+		aux = _mm256_sub_pd(_mm256_sub_pd(_mm256_sub_pd(_mm256_mul_pd(aba,aba), _mm256_mul_pd(abb,abb)), _mm256_mul_pd(abc,abc)), _mm256_mul_pd(abd,abd));
+		
+		aux1 = _mm256_sub_pd(_mm256_add_pd(_mm256_add_pd(_mm256_mul_pd(aba,abb), _mm256_mul_pd(abb,aba)), _mm256_mul_pd(abc,abd)), _mm256_mul_pd(abd,abc));
+		
+		aux2 = _mm256_add_pd(_mm256_add_pd(_mm256_sub_pd(_mm256_mul_pd(aba,abc), _mm256_mul_pd(abb,abd)), _mm256_mul_pd(abc,aba)), _mm256_mul_pd(abd,abb));
+		
+		aux3 = _mm256_add_pd(_mm256_sub_pd(_mm256_add_pd(_mm256_mul_pd(aba,abd), _mm256_mul_pd(abb,abc)), _mm256_mul_pd(abc,abb)), _mm256_mul_pd(abd,aba));
+		
+
+	(*resultado)[0]+=aux[0]+aux[1]+aux[2]+aux[3];
+	(*resultado)[1]+=aux1[0]+aux1[1]+aux1[2]+aux1[3];
+	(*resultado)[2]+=aux2[0]+aux2[1]+aux2[2]+aux2[3];
+	(*resultado)[3]+=aux3[0]+aux3[1]+aux3[2]+aux3[3];
+
 	}
 
-<<<<<<< HEAD
-	(*DP) = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-	(*DP)= (double *)&resultado;
-=======
-	//(*DP) = (double*)_mm_malloc(sizeof(double)*4, TAMLINHA);
-	//(*DP)= (double *)&resultado;
->>>>>>> 8387ebcc5b3dab772e19a548675df9363fe21baf
 
-	printf(" Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*DP)[0], (*DP)[1], (*DP)[2], (*DP)[3]);
+
+  //printf("Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*resultado)[0], resultado[1], resultado[2], resultado[3]);
 
 }
 
