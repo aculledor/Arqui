@@ -84,11 +84,11 @@ int main(int argc, char **argv) {
 	
   struct quaternion *A, *B, DP;
   
-  inicializarQuaternions(&A, &B, &DP, N);
+  inicializarQuaternions(&A, &B, &DP, N, f);
 
   start_counter();
   
-  calculos(A, B, &DP, N, f);
+  calculos(A, B, &DP, N);
 
   ck = get_counter();
 
