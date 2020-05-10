@@ -26,21 +26,23 @@ void inicializarQuaternions(struct quaternion **A, struct quaternion **B, struct
 
 void calculos(struct quaternion *A, struct quaternion *B, struct quaternion *DP, int N, int Fio){
 	int i;
-	double aux = 0;
+	double aba,abb,abc,abd;
 	double C[Fios[Fio]][4];
 	
-	#pragma omp parallel shared(A,B,DP,C) private(i, aux) num_threads(Fios[Fio])
+	#pragma omp parallel shared(A,B,DP,C) private(i,aba,abb,abc,abd) num_threads(Fios[Fio])
 	{
 		#pragma omp for
 			for(i=0;i<N;i++){
-				aux = A[i].a * B[i].a;
-				C[omp_get_thread_num()][0] += aux * aux;
-				aux = A[i].b * B[i].b;
-				C[omp_get_thread_num()][1] += aux * aux;
-				aux = A[i].c * B[i].c;
-				C[omp_get_thread_num()][2] += aux * aux;
-				aux = A[i].d * B[i].d;
-				C[omp_get_thread_num()][3] += aux * aux;
+				aba = A[i].a*B[i].a - A[i].b*B[i].b - A[i].c*B[i].c - A[i].d*B[i].d;
+				abb = A[i].a*B[i].b + A[i].b*B[i].a + A[i].c*B[i].d - A[i].d*B[i].c;
+				abc = A[i].a*B[i].c - A[i].b*B[i].d + A[i].c*B[i].a + A[i].d*B[i].b;
+				abd = A[i].a*B[i].d + A[i].b*B[i].c - A[i].c*B[i].b + A[i].d*B[i].a;
+
+				C[omp_get_thread_num()][0] += (aba*aba - abb*abb - abc*abc - abd*abd);
+				C[omp_get_thread_num()][1] += (aba*abb + abb*aba + abc*abd - abd*abc);
+				C[omp_get_thread_num()][2] += (aba*abc - abb*abd + abc*aba + abd*abb);
+				C[omp_get_thread_num()][3] += (aba*abd + abb*abc - abc*abb + abd*aba);
+
 			}
 		#pragma omp barrier
 		#pragma omp single
