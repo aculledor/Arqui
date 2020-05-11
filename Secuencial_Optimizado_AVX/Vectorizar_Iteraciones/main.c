@@ -1,7 +1,5 @@
 #include "header.h"
 
-//Pole
-
 int Q[5] = {2, 4, 6, 7, 1};
 
 void start_counter();
@@ -79,20 +77,19 @@ int main(int argc, char **argv) {
   
   N = pow(BASE, Q[q]);
  
-	__m256d *A, *B, resultado; 
+	__m256d *A, *B, DP; 
   
-  inicializarQuaternions(&A, &B, &resultado, N);
+  inicializarQuaternions(&A, &B, &DP, N);
 
   start_counter();
   
-  calculos(A, B, &resultado, N);
+  calculos(A, B, &DP, N);
 
   ck = get_counter();
 
 
-  //printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
 
-  printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, resultado[0], resultado[1], resultado[2], resultado[3]);
+  printf("Clocks = %1.10lf. Resultado: [ \n%lf + \n%lfi + \n%lfj + \n%lfk ]\n", ck, DP[0], DP[1], DP[2], DP[3]);
 
 
 /* Esta rutina imprime a frecuencia de reloxo estimada coas rutinas start_counter/get_counter */
