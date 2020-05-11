@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
 
 	//printf("----------------------------------\n");
 
-	destruir(A,B,N);
+	destruir(A,B);
 
   return 0;
 }

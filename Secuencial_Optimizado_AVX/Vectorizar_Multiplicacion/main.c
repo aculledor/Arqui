@@ -76,18 +76,19 @@ int main(int argc, char **argv) {
     exit(0);
   }
   
-  N = pow(BASE, Q[q]);
-	
+ // N = pow(BASE, Q[q]);
+	N=100000000;	
+
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
-	double **A, **B, *DP;
+	__m256d *A, *B;//, DP; 
+	double *DP;
 
-  
-  inicializarQuaternions(&A, &B, &DP, N);
+  inicializarQuaternions(&A, &B, &DP,  N);
 
   start_counter();
   
-  calculos(A, B, &DP, N);
+  calculos(A, B, &DP,  N);
 
   ck = get_counter();
 
@@ -98,7 +99,7 @@ int main(int argc, char **argv) {
 
 	//printf("----------------------------------\n");
 
-	destruir(A, B, N);
+	destruir(A, B);
 
   return 0;
 }

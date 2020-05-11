@@ -22,7 +22,7 @@ void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N)
 
 void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N);
 
-void destruir(__m256d *A, __m256d *B, int N);
+void destruir(__m256d *A, __m256d *B);
 
 
 #endif //HEADER_H
