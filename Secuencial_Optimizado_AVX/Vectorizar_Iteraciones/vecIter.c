@@ -4,7 +4,7 @@
 
 #include "header.h"
 
-void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N){
+void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *DP, int N){
 	(*A)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
 	(*B)  = (__m256d*)_mm_malloc(sizeof(__m256d)*N, TAMLINHA);
 	
@@ -17,7 +17,7 @@ void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N)
 
 }
 
-void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N){
+void calculos(__m256d *A, __m256d *B, __m256d *DP, int N){
 	int i;
 	 __m256d a0=_mm256_setzero_pd(), a1=_mm256_setzero_pd(), a2=_mm256_setzero_pd(), a3=_mm256_setzero_pd(), b0=_mm256_setzero_pd(), b1=_mm256_setzero_pd(), b2=_mm256_setzero_pd(), b3=_mm256_setzero_pd();
 	 __m256d aba=_mm256_setzero_pd(), abb=_mm256_setzero_pd(), abc=_mm256_setzero_pd(), abd=_mm256_setzero_pd();
@@ -54,16 +54,13 @@ void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N){
 		aux3 = _mm256_add_pd(_mm256_sub_pd(_mm256_add_pd(_mm256_mul_pd(aba,abd), _mm256_mul_pd(abb,abc)), _mm256_mul_pd(abc,abb)), _mm256_mul_pd(abd,aba));
 		
 
-	(*resultado)[0]+=aux[0]+aux[1]+aux[2]+aux[3];
-	(*resultado)[1]+=aux1[0]+aux1[1]+aux1[2]+aux1[3];
-	(*resultado)[2]+=aux2[0]+aux2[1]+aux2[2]+aux2[3];
-	(*resultado)[3]+=aux3[0]+aux3[1]+aux3[2]+aux3[3];
+	(*DP)[0]+=aux[0]+aux[1]+aux[2]+aux[3];
+	(*DP)[1]+=aux1[0]+aux1[1]+aux1[2]+aux1[3];
+	(*DP)[2]+=aux2[0]+aux2[1]+aux2[2]+aux2[3];
+	(*DP)[3]+=aux3[0]+aux3[1]+aux3[2]+aux3[3];
 
 	}
 
-
-
-  //printf("Resultado: [ \n%lf + %lfi + %lfj + %lfk ]\n", (*resultado)[0], resultado[1], resultado[2], resultado[3]);
 
 }
 
