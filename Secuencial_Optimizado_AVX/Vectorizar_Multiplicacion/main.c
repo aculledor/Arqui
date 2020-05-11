@@ -76,12 +76,9 @@ int main(int argc, char **argv) {
     exit(0);
   }
   
- // N = pow(BASE, Q[q]);
-	N=100000000;	
-
-	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
+ N = pow(BASE, Q[q]);
 	
-	__m256d *A, *B;//, DP; 
+	__m256d *A, *B;
 	double *DP;
 
   inicializarQuaternions(&A, &B, &DP,  N);
@@ -99,7 +96,7 @@ int main(int argc, char **argv) {
 
 	//printf("----------------------------------\n");
 
-	destruir(A, B);
+	destruir(A, B, DP);
 
   return 0;
 }

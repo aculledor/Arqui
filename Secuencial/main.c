@@ -76,8 +76,8 @@ int main(int argc, char **argv) {
     exit(0);
   }
   
-  N = pow(BASE, Q[q]);
-	
+  //N = pow(BASE, Q[q]);
+	N=1;
 	//printf("q=%d Q=%d N=%d\n", q, Q[q], N);
 	
   struct quaternion *A, *B, *C, DP;

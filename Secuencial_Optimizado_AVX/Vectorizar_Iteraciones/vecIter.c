@@ -14,6 +14,7 @@ void inicializarQuaternions(__m256d **A, __m256d **B, __m256d *resultado, int N)
 		(*A)[i] = _mm256_set_pd(rand(),rand(),rand(),rand()); 
 		(*B)[i] = _mm256_set_pd(rand(),rand(),rand(),rand());
 	} 
+
 }
 
 void calculos(__m256d *A, __m256d *B, __m256d *resultado, int N){
